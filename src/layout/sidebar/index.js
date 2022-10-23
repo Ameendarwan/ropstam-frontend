@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Box,
   CssBaseline,
@@ -22,6 +22,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import CategoryIcon from "@mui/icons-material/Category";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import { routeNames } from "routes/constants";
+import { sidebarItems } from "./constants";
 
 const drawerWidth = 240;
 
@@ -92,6 +93,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function MiniDrawer({ children }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -144,17 +146,16 @@ export default function MiniDrawer({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Categories", "Cars"].map((text, index) => (
+          {sidebarItems.map((o) => (
             <ListItem
-              key={text}
+              key={o.id}
               disablePadding
-              onClick={() => navigate(routeNames[text.toLowerCase()].route)}
+              onClick={() => navigate(o.route)}
+              selected={o.route === location.pathname}
             >
               <ListItemButton>
-                <ListItemIcon>
-                  {index === 0 ? <CategoryIcon /> : <DirectionsCarIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemIcon>{o.icon}</ListItemIcon>
+                <ListItemText primary={o.title} />
               </ListItemButton>
             </ListItem>
           ))}

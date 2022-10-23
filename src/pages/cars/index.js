@@ -1,25 +1,44 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "firstName", headerName: "First name", width: 130 },
-  { field: "lastName", headerName: "Last name", width: 130 },
+  { field: "id", headerName: "ID", flex: 1 },
+  { field: "category", headerName: "Category", flex: 1 },
+  { field: "color", headerName: "Color", flex: 1 },
+  { field: "model", headerName: "Model", flex: 1 },
+  { field: "registration-no", headerName: "Registration No", flex: 1 },
+  { field: "owner", headerName: "Owner", flex: 1 },
   {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 90,
-  },
-  {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+    field: "Actions",
+    headerName: "Actions",
+    flex: 1,
+    // description: "This column has a value getter and is not sortable.",
+    // sortable: false,
+    renderCell: (params) => {
+      return (
+        <div className="display-flex">
+          <div className="p-10">
+            <Tooltip title="Edit">
+              <IconButton>
+                <ModeEditIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
+          <div className="p-10">
+            <Tooltip title="Delete">
+              <IconButton>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
+        </div>
+      );
+    },
   },
 ];
 
@@ -38,20 +57,20 @@ const rows = [
 export default function CarsList() {
   return (
     <div style={{ height: 600 }}>
-      {/* <Typography
-      // sx={{ flex: "1 1 100%" }}
-      // variant="h6"
-      // id="tableTitle"
-      // component="div"
+      <Typography
+        sx={{ flex: "1 1 100%" }}
+        variant="h6"
+        id="tableTitle"
+        component="div"
       >
-        Nutrition
-      </Typography> */}
+        Cars
+      </Typography>
       <DataGrid
         rows={rows}
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[5]}
-        checkboxSelection
+        // checkboxSelection
       />
     </div>
   );

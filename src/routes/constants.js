@@ -10,6 +10,7 @@ export const routeNames = {
   },
   cars: {
     route: "/cars",
+    title: "Cars",
   },
   categories: {
     route: "/categories",
