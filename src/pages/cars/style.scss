@@ -1,0 +1,13 @@
+.cars {
+  &__heading {
+    display: flex;
+    align-items: center;
+  }
+  &__btn {
+    width: unset !important;
+  }
+  &__height {
+    position: relative;
+    height: 600px;
+  }
+}

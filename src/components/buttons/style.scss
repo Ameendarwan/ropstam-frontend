@@ -2,17 +2,16 @@
 
 .primary__button {
   &__filled {
-    background-color: $btnPink;
+    background-color: $primaryHeadingColor;
     width: 100%;
     height: 50px;
+    padding: 0px 50px;
+    white-space: nowrap;
     color: white;
     border-radius: 25px;
-    border: 1px solid $btnPink;
+    border: 1px solid $primaryHeadingColor;
     font-family: "Poppins Semi Bold", sans-serif;
     font-size: 18px;
     cursor: pointer;
-    &:hover {
-      background-color: $btnDarkPink;
-    }
   }
 }

@@ -5,6 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import PrimaryButton from "components/buttons/primaryButton";
 
 const columns = [
   { field: "id", headerName: "ID", flex: 1 },
@@ -57,14 +58,22 @@ const rows = [
 export default function CategoriesList() {
   return (
     <div style={{ height: 600 }}>
-      <Typography
-        sx={{ flex: "1 1 100%" }}
-        variant="h6"
-        id="tableTitle"
-        component="div"
-      >
-        Categories
-      </Typography>
+      <div className="display-flex mb-20">
+        <Typography
+          sx={{ flex: "1 1 100%", display: "flex", alignItems: "center" }}
+          variant="h6"
+          id="tableTitle"
+          component="div"
+        >
+          Categories
+        </Typography>
+        <PrimaryButton
+          btnType="submit"
+          label={"Add New"}
+          onClick={() => {}}
+          classes="cars__btn"
+        />
+      </div>
       <DataGrid
         rows={rows}
         columns={columns}

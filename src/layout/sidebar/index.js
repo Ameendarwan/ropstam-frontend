@@ -19,9 +19,6 @@ import { styled, useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import CategoryIcon from "@mui/icons-material/Category";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import { routeNames } from "routes/constants";
 import { sidebarItems } from "./constants";
 
 const drawerWidth = 240;
