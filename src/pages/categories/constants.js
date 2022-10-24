@@ -1,6 +1,6 @@
 export const categoriesColumns = [
   { field: "id", headerName: "ID", flex: 1 },
-  { field: "name", headerName: "Name", flex: 1 },
+  { field: "name", headerName: "Name", editable: true, flex: 1 },
 ];
 
 export const categoriesRows = [

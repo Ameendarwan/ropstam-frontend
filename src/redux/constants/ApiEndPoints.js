@@ -1,10 +1,18 @@
-/* BASE URL */
-export const BASE_URL =
-  "https://backend.develop.topinterieur.flykube.agifly.cloud/api/v1";
+// BASE URL
+export const BASE_URL = "http://localhost:5000";
 
-/* Authentication */
-export const sign_in = `/auth/sign_in`;
-export const sign_up = `/auth/sign_up`;
-export const change_password = `/auth/change_password`;
-export const forgot_password = `/auth/forgot_password`;
-export const reset_password = `/auth/reset_password`;
+// Authentication
+export const user_login = "/api/user/login";
+export const user_register = "/api/user/register";
+
+// Categories
+export const all_categories = "/api/category/all";
+export const add_category = "/api/category/add";
+export const update_category = "/api/category/update";
+export const delete_category = "/api/category/delete";
+
+// Categories
+export const all_cars = "/api/car/all";
+export const add_car = "/api/car/add";
+export const update_car = "/api/car/update";
+export const delete_car = "/api/car/delete";

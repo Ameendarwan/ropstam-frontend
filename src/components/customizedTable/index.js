@@ -3,7 +3,6 @@ import _ from "lodash";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import Tooltip from "@mui/material/Tooltip";
 import { Snackbar, Alert } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -11,7 +10,16 @@ import PrimaryButton from "components/buttons/primaryButton";
 import AlertDialog from "components/alertDialog";
 import "./style.scss";
 
-export default function CustomizedTable({ heading, columns, rows, title }) {
+export default function CustomizedTable({
+  heading,
+  columns,
+  rows,
+  title,
+  callUpdate,
+  callDelete,
+  handleAddRow,
+  msg,
+}) {
   let update = "Update";
   let delt = "Delete";
   let actions = {
@@ -22,15 +30,8 @@ export default function CustomizedTable({ heading, columns, rows, title }) {
       return (
         <div className="display-flex">
           <div className="p-10">
-            <Tooltip title={update}>
-              <IconButton onClick={() => handleShow(update)}>
-                <ModeEditIcon />
-              </IconButton>
-            </Tooltip>
-          </div>
-          <div className="p-10">
             <Tooltip title={delt}>
-              <IconButton onClick={() => handleShow(delt)}>
+              <IconButton onClick={() => handleShow(delt, params.id)}>
                 <DeleteIcon />
               </IconButton>
             </Tooltip>
@@ -47,31 +48,38 @@ export default function CustomizedTable({ heading, columns, rows, title }) {
   const [snackMsg, setSnackMsg] = useState(false);
   const [editRow, setEditRow] = useState({});
   const [updateRow, setUpdateRow] = useState({});
+  const [rowId, setRowId] = useState();
 
   useEffect(() => {
     setModifiedColumn([...columns, actions]);
   }, [columns]);
 
-  const handleShow = (type) => {
-    console.log("Yes Show");
-    if (type === update)
-      setAlertMsg(`Are you sure you want to update this ${title} details?`);
-    if (type === delt)
+  useEffect(() => {
+    if (!_.isEmpty(updateRow)) setShowAlert(true);
+  }, [updateRow]);
+
+  const handleShow = (type, id) => {
+    if (type === delt) {
+      setRowId(id);
       setAlertMsg(`Are you sure you want to delete this ${title}?`);
+    }
     setAlertType(type);
     setShowAlert(true);
   };
 
   const handleConfirm = () => {
-    if (alertType === update)
+    if (alertType === update) {
+      callUpdate(updateRow);
       setSnackMsg("Record has been updated successfully!");
-    if (alertType === delt)
+    }
+    if (alertType === delt) {
+      callDelete(rowId);
       setSnackMsg("Record has been deleted successfully!");
+    }
     setShowAlert(false);
     setShowSnack(true);
   };
   const handleCancel = () => {
-    console.log("Cancel");
     setShowAlert(false);
   };
   const handleSnackClose = () => {
@@ -87,9 +95,16 @@ export default function CustomizedTable({ heading, columns, rows, title }) {
       ...params.row,
       [params["field"]]: editRow[params.id][params.field].value,
     };
-    console.log("GG", data);
+    setAlertMsg(`Are you sure you want to update this ${title} details?`);
+    setAlertType(update);
     setUpdateRow(data);
     e.defaultMuiPrevented = true;
+  };
+
+  const callAdd = () => {
+    handleAddRow();
+    setShowSnack(true);
+    setSnackMsg("New row has been added successfully!");
   };
 
   return (
@@ -123,13 +138,13 @@ export default function CustomizedTable({ heading, columns, rows, title }) {
           {heading}
         </Typography>
         <PrimaryButton
-          btnType="submit"
+          btnType="button"
           label={"Add New"}
-          onClick={() => {}}
+          onClick={callAdd}
           classes="table__btn"
         />
       </div>
-      {modifiedColumn && (
+      {modifiedColumn && rows && (
         <DataGrid
           rows={rows}
           columns={modifiedColumn}
@@ -138,7 +153,6 @@ export default function CustomizedTable({ heading, columns, rows, title }) {
           onCellEditStop={handleEditStop}
           pageSize={10}
           rowsPerPageOptions={[5]}
-          // checkboxSelection
         />
       )}
     </div>

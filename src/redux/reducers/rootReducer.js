@@ -1,8 +1,14 @@
 import { combineReducers } from "redux";
-import auth from "./auth";
+import user from "./user";
+import car from "./car";
+import category from "./category";
+import loader from "./loader";
 
 const rootReducer = combineReducers({
-  auth: auth,
+  user,
+  car,
+  category,
+  loader,
 });
 
 export default rootReducer;
