@@ -137,7 +137,7 @@ export default function MiniDrawer({ user, children }) {
                 component="div"
                 style={{ color: "black" }}
               >
-                Ropstam Car Company
+                Ameen Car Company
               </Typography>
             </Toolbar>
           </AppBar>

@@ -60,6 +60,7 @@ function AppRoutes(props) {
                 </ProtectedRoute>
               }
             />
+            <Route path="*" element={<p>There's nothing here: 404!</p>} />
           </Routes>
         </SideBar>
       </Suspense>

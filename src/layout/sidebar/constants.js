@@ -1,9 +1,16 @@
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import CategoryIcon from "@mui/icons-material/Category";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { routeNames } from "routes/constants";
 
 export const sidebarItems = [
+  {
+    id: 11,
+    title: "Dashboard",
+    icon: <DashboardIcon />,
+    route: routeNames.dashboard.route,
+  },
   {
     id: 1,
     title: "Categories",

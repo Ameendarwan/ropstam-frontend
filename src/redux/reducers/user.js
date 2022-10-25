@@ -1,6 +1,8 @@
 import { USER_LOGIN } from "../constants/constants";
 const INIT_STATE = {
-  token: null,
+  token: localStorage.getItem("userToken")
+    ? localStorage.getItem("userToken")
+    : null,
   refreshToken: null,
 };
 const user = (state = INIT_STATE, action) => {
