@@ -9,19 +9,26 @@ import { useForm } from "react-hook-form";
 import TextFieldErrorMessage from "components/textFieldError";
 import PrimaryButton from "components/buttons/primaryButton";
 import BottomText from "components/bottomText";
+import { userLogin } from "redux/actions/user";
 import { routeNames } from "routes/constants";
 
-function Login() {
+function Login(props) {
   const [showPassword, setShowPassword] = useState(false);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onBlur" });
 
+  useEffect(() => {
+    console.log("SUC MSG", props.loader.successMsg);
+  }, [props.loader.successMsg]);
+  useEffect(() => {
+    console.log("SUC MSG", props.loader.errorMsg);
+  }, [props.loader.errorMsg]);
+
   const onSubmit = async ({ email, password }) => {
-    console.log("DDD", email, password);
+    props.userLogin({ email, password });
   };
 
   const handleMouseDownPassword = (event) => {
@@ -107,6 +114,5 @@ function Login() {
   );
 }
 
-// const mapStateToProps = ({ AuthReducer }) => ({ AuthReducer });
-// export default connect(mapStateToProps, { userLogin, handleClearData })(Login);
-export default Login;
+const mapStateToProps = ({ user, loader }) => ({ user, loader });
+export default connect(mapStateToProps, { userLogin })(Login);

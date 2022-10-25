@@ -8,11 +8,11 @@ import { carColumns } from "./constants";
 function Categories(props) {
   const [rowsData, setRowsData] = useState([]);
   const [columnData, setColumnData] = useState([]);
-  const [categoriesList, setCategoriesList] = useState([]);
 
   useEffect(() => {
     props.getAllCars();
     props.getAllCategories();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -20,7 +20,6 @@ function Categories(props) {
   }, [props.car.cars]);
 
   useEffect(() => {
-    setCategoriesList(props.category.categories);
     let arr = [];
     props.category.categories?.forEach((ele) => {
       arr.push(ele.name);

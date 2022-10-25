@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Grid, TextField } from "@mui/material";
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import TextFieldErrorMessage from "components/textFieldError";
 import PrimaryButton from "components/buttons/primaryButton";
 import BottomText from "components/bottomText";
+import { userRegister } from "redux/actions/user";
 import { routeNames } from "routes/constants";
 
-function SignUp() {
-  const navigate = useNavigate();
+function SignUp(props) {
   const {
     register,
     handleSubmit,
@@ -17,8 +16,7 @@ function SignUp() {
   } = useForm({ mode: "onBlur" });
 
   const onSubmit = async ({ email, firstName, lastName }) => {
-    console.log("DDD", email, firstName, lastName);
-    navigate(routeNames.dashboard.route);
+    props.userRegister({ email, firstName, lastName });
   };
 
   return (
@@ -101,6 +99,5 @@ function SignUp() {
   );
 }
 
-// const mapStateToProps = ({ AuthReducer }) => ({ AuthReducer });
-// export default connect(mapStateToProps, { userLogin, handleClearData })(Login);
-export default SignUp;
+const mapStateToProps = ({ user }) => ({ user });
+export default connect(mapStateToProps, { userRegister })(SignUp);

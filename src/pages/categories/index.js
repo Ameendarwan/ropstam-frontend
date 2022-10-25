@@ -14,6 +14,7 @@ function Categories(props) {
 
   useEffect(() => {
     props.getAllCategories();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {

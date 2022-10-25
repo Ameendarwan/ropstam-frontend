@@ -1,5 +1,7 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
+import { connect } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Snackbar, Alert } from "@mui/material";
 import { routeNames } from "./constants";
 
 const SignUp = lazy(() => import("pages/signup"));
@@ -9,10 +11,30 @@ const Dashboard = lazy(() => import("pages/dashboard"));
 const Cars = lazy(() => import("pages/cars"));
 const Categories = lazy(() => import("pages/categories"));
 
-export default function AppRoutes() {
+function AppRoutes(props) {
+  const { showSuccessMsg, showErrorMsg, errorMsg, successMsg } = props.loader;
+  // useEffect(() => {
+
+  // }, [props.loader.showSuccessMsg])
+
   return (
     <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>
+        {(showSuccessMsg || showErrorMsg) && (
+          <Snackbar
+            open={true}
+            autoHideDuration={3000}
+            // onClose={handleSnackClose}
+            anchorOrigin={{ horizontal: "right", vertical: "top" }}
+          >
+            <Alert
+              severity={showSuccessMsg ? "success" : "error"}
+              sx={{ width: "100%" }}
+            >
+              {showSuccessMsg ? successMsg : errorMsg}
+            </Alert>
+          </Snackbar>
+        )}
         <SideBar>
           <Routes>
             <Route path={routeNames.signUp.route} element={<SignUp />} />
@@ -29,3 +51,6 @@ export default function AppRoutes() {
     </BrowserRouter>
   );
 }
+
+const mapStateToProps = ({ user, loader }) => ({ user, loader });
+export default connect(mapStateToProps, null)(AppRoutes);

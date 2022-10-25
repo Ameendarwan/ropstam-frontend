@@ -4,7 +4,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import { Snackbar, Alert } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import PrimaryButton from "components/buttons/primaryButton";
 import AlertDialog from "components/alertDialog";
@@ -44,8 +43,6 @@ export default function CustomizedTable({
   const [showAlert, setShowAlert] = useState(false);
   const [alertType, setAlertType] = useState();
   const [alertMsg, setAlertMsg] = useState();
-  const [showSnack, setShowSnack] = useState(false);
-  const [snackMsg, setSnackMsg] = useState(false);
   const [editRow, setEditRow] = useState({});
   const [updateRow, setUpdateRow] = useState({});
   const [rowId, setRowId] = useState();
@@ -68,22 +65,13 @@ export default function CustomizedTable({
   };
 
   const handleConfirm = () => {
-    if (alertType === update) {
-      callUpdate(updateRow);
-      setSnackMsg("Record has been updated successfully!");
-    }
-    if (alertType === delt) {
-      callDelete(rowId);
-      setSnackMsg("Record has been deleted successfully!");
-    }
+    if (alertType === update) callUpdate(updateRow);
+    if (alertType === delt) callDelete(rowId);
+
     setShowAlert(false);
-    setShowSnack(true);
   };
   const handleCancel = () => {
     setShowAlert(false);
-  };
-  const handleSnackClose = () => {
-    setShowSnack(false);
   };
 
   const handleEditRowsModelChange = React.useCallback((newModel) => {
@@ -103,8 +91,6 @@ export default function CustomizedTable({
 
   const callAdd = () => {
     handleAddRow();
-    setShowSnack(true);
-    setSnackMsg("New row has been added successfully!");
   };
 
   return (
@@ -118,16 +104,6 @@ export default function CustomizedTable({
           showAlert={showAlert}
         />
       )}
-      <Snackbar
-        open={showSnack}
-        autoHideDuration={3000}
-        onClose={handleSnackClose}
-        anchorOrigin={{ horizontal: "right", vertical: "top" }}
-      >
-        <Alert onClose={handleCancel} severity="success" sx={{ width: "100%" }}>
-          {snackMsg}
-        </Alert>
-      </Snackbar>
       <div className="display-flex mb-20">
         <Typography
           sx={{ flex: "1 1 100%", display: "flex", alignItems: "center" }}
