@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Grid, TextField, IconButton } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -13,6 +14,7 @@ import { userLogin } from "redux/actions/user";
 import { routeNames } from "routes/constants";
 
 function Login(props) {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -21,11 +23,8 @@ function Login(props) {
   } = useForm({ mode: "onBlur" });
 
   useEffect(() => {
-    console.log("SUC MSG", props.loader.successMsg);
-  }, [props.loader.successMsg]);
-  useEffect(() => {
-    console.log("SUC MSG", props.loader.errorMsg);
-  }, [props.loader.errorMsg]);
+    if (props.loader.showSuccessMsg) navigate(routeNames.dashboard.route);
+  }, [props.loader.showSuccessMsg]);
 
   const onSubmit = async ({ email, password }) => {
     props.userLogin({ email, password });

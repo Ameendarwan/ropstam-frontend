@@ -12,7 +12,8 @@ export const userRegister = (details) => {
 export const userLogin = (details) => {
   return async (dispatch) => {
     const { data } = await axios.post(user_login, details);
-    dispatch({ type: USER_LOGIN, payload: data });
+    localStorage.setItem("userToken", data.data.accessToken);
+    dispatch({ type: USER_LOGIN, payload: data.data });
     return data;
   };
 };

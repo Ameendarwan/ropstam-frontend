@@ -19,10 +19,12 @@ const axios = Axios.create({
 });
 
 const { dispatch } = store;
+let token = localStorage.getItem("userToken");
 
 // Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
+    config.headers.Authorization = token ? `Bearer ${token}` : "";
     dispatch(showLoader());
     return config;
   },

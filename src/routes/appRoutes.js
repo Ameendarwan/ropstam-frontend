@@ -1,7 +1,8 @@
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { lazy, Suspense } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Snackbar, Alert } from "@mui/material";
+import ProtectedRoute from "./protectedRoute";
 import { routeNames } from "./constants";
 
 const SignUp = lazy(() => import("pages/signup"));
@@ -13,9 +14,6 @@ const Categories = lazy(() => import("pages/categories"));
 
 function AppRoutes(props) {
   const { showSuccessMsg, showErrorMsg, errorMsg, successMsg } = props.loader;
-  // useEffect(() => {
-
-  // }, [props.loader.showSuccessMsg])
 
   return (
     <BrowserRouter>
@@ -24,7 +22,6 @@ function AppRoutes(props) {
           <Snackbar
             open={true}
             autoHideDuration={3000}
-            // onClose={handleSnackClose}
             anchorOrigin={{ horizontal: "right", vertical: "top" }}
           >
             <Alert
@@ -35,16 +32,34 @@ function AppRoutes(props) {
             </Alert>
           </Snackbar>
         )}
-        <SideBar>
+        <SideBar user={props.user.token}>
           <Routes>
             <Route path={routeNames.signUp.route} element={<SignUp />} />
             <Route path={routeNames.login.route} element={<Login />} />
-            <Route path={routeNames.dashboard.route} element={<Dashboard />} />
+            <Route
+              path={routeNames.dashboard.route}
+              element={
+                <ProtectedRoute user={props.user.token}>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path={routeNames.categories.route}
-              element={<Categories />}
+              element={
+                <ProtectedRoute user={props.user.token}>
+                  <Categories />
+                </ProtectedRoute>
+              }
             />
-            <Route path={routeNames.cars.route} element={<Cars />} />
+            <Route
+              path={routeNames.cars.route}
+              element={
+                <ProtectedRoute user={props.user.token}>
+                  <Cars />{" "}
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </SideBar>
       </Suspense>

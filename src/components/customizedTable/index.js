@@ -9,7 +9,7 @@ import PrimaryButton from "components/buttons/primaryButton";
 import AlertDialog from "components/alertDialog";
 import "./style.scss";
 
-export default function CustomizedTable({
+function CustomizedTable({
   heading,
   columns,
   rows,
@@ -134,3 +134,5 @@ export default function CustomizedTable({
     </div>
   );
 }
+
+export default React.memo(CustomizedTable);

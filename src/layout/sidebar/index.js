@@ -20,6 +20,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { sidebarItems } from "./constants";
+import { routeNames } from "routes/constants";
 
 const drawerWidth = 240;
 
@@ -88,7 +89,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer({ children }) {
+export default function MiniDrawer({ user, children }) {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
@@ -102,62 +103,77 @@ export default function MiniDrawer({ children }) {
     setOpen(false);
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate(routeNames.login.route);
+    window.location.reload(false);
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            // color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && {
-                display: "none",
-              }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            style={{ color: "black" }}
-          >
-            Ropstam Car Company
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {sidebarItems.map((o) => (
-            <ListItem
-              key={o.id}
-              disablePadding
-              onClick={() => navigate(o.route)}
-              selected={o.route === location.pathname}
-            >
-              <ListItemButton>
-                <ListItemIcon>{o.icon}</ListItemIcon>
-                <ListItemText primary={o.title} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
+      {user && (
+        <>
+          {" "}
+          <CssBaseline />
+          <AppBar position="fixed" open={open}>
+            <Toolbar>
+              <IconButton
+                // color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                sx={{
+                  marginRight: 5,
+                  ...(open && {
+                    display: "none",
+                  }),
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                style={{ color: "black" }}
+              >
+                Ropstam Car Company
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Drawer variant="permanent" open={open}>
+            <DrawerHeader>
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === "rtl" ? (
+                  <ChevronRightIcon />
+                ) : (
+                  <ChevronLeftIcon />
+                )}
+              </IconButton>
+            </DrawerHeader>
+            <Divider />
+            <List>
+              {sidebarItems.map((o) => (
+                <ListItem
+                  key={o.id}
+                  disablePadding
+                  onClick={
+                    o.title === "Logout"
+                      ? handleLogout
+                      : () => navigate(o.route)
+                  }
+                  selected={o.route === location.pathname}
+                >
+                  <ListItemButton>
+                    <ListItemIcon>{o.icon}</ListItemIcon>
+                    <ListItemText primary={o.title} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Drawer>
+        </>
+      )}
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         {children}
