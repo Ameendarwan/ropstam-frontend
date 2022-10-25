@@ -137,7 +137,7 @@ export default function MiniDrawer({ user, children }) {
                 component="div"
                 style={{ color: "black" }}
               >
-                Ameen Car Company
+                Ameen Car Management Portal
               </Typography>
             </Toolbar>
           </AppBar>
